@@ -3,7 +3,7 @@ import { ProductContext } from "../pages/products/index";
 
 function Product({ product }) {
 	let { title, desc, price, _id: id } = product || {};
-	const { selectedProducts, dispatch } = useContext(ProductContext);
+	const { dispatch, fetchProducts } = useContext(ProductContext);
 
 	//handle change  checkbox
 	const handleChange = (e) => {
@@ -13,6 +13,14 @@ function Product({ product }) {
 		}
 
 		dispatch({ type: "removeSelection", payload: id });
+	};
+
+	//delete product
+	const handleDeleteProduct = async () => {
+		await fetch(`http://localhost:8000/products/${id}`, {
+			method: "DELETE",
+		});
+		await fetchProducts();
 	};
 
 	return (
@@ -33,7 +41,9 @@ function Product({ product }) {
 			</div>
 
 			<div className="w-24 table-cell px-3 py-2 border-b">
-				<button className="px-3 py-2 text-xs rounded-lg bg-red-300">
+				<button
+					className="px-3 py-2 text-xs rounded-lg bg-red-300"
+					onClick={handleDeleteProduct}>
 					Delete
 				</button>
 			</div>
