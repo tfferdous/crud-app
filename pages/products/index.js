@@ -36,12 +36,12 @@ const Products = () => {
 		));
 
 	async function fetchProducts() {
-		let { products } = await fetchData("http://localhost:8000/products/");
+		let { products } = await fetchData("http://localhost:4000/products/");
 		setProducts(products);
 	}
 
 	async function deleteMultipleProducts() {
-		await deleteProduct("http://localhost:8000/products/", {
+		await deleteProduct("http://localhost:4000/products/", {
 			selectedProducts,
 		});
 	}
