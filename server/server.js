@@ -1,6 +1,7 @@
 //external imports
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 require("dotenv").config();
 
 //internal imports
@@ -9,6 +10,7 @@ const productRouter = require("./routes/product");
 
 //initialize-app
 const app = express();
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

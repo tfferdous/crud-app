@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { json } = require("express");
 const Product = require("../models/product");
 
 //add product
@@ -49,6 +50,23 @@ router.patch("/:id", async (req, res) => {
 		});
 		res.status(200).json({ updatedProduct });
 	} catch (error) {}
+});
+
+//delete  multiple products
+router.delete("/", async (req, res) => {
+	let { selectedProducts } = req.body;
+	try {
+		let deletedProducts = await Product.deleteMany({
+			_id: { $in: selectedProducts },
+		});
+		res.status(200).json({
+			deletedProducts,
+		});
+	} catch (error) {
+		res.status(500).json({
+			message: error.message,
+		});
+	}
 });
 
 //delete product
