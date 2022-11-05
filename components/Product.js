@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { ProductContext } from "../pages/products/index";
+import { ProductContext } from "../pages/index";
 
 function Product({ product }) {
 	let { title, desc, price, _id: id } = product || {};
@@ -17,7 +17,7 @@ function Product({ product }) {
 
 	//delete product
 	const handleDeleteProduct = async () => {
-		await fetch(`http://localhost:8000/products/${id}`, {
+		await fetch(`http://localhost:4000/products/${id}`, {
 			method: "DELETE",
 		});
 		await fetchProducts();
@@ -40,10 +40,15 @@ function Product({ product }) {
 				<p>{price}</p>
 			</div>
 
+			<div className="table-cell px-3 py-2 border-b w-40	">
+				<p>pending</p>
+			</div>
+
 			<div className="w-24 table-cell px-3 py-2 border-b">
 				<button
 					className="px-3 py-2 text-xs rounded-lg bg-red-300"
-					onClick={handleDeleteProduct}>
+					onClick={handleDeleteProduct}
+					type="button">
 					Delete
 				</button>
 			</div>
