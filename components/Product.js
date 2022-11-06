@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { ProductContext } from "../pages/index";
+import { ProductContext } from "../pages/admin/index";
 
 function Product({ product }) {
 	let { title, desc, price, _id: id } = product || {};
@@ -26,25 +26,25 @@ function Product({ product }) {
 	return (
 		<li className="table-row">
 			<div
-				className="w-7 table-cell px-3 py-2 border-b"
+				className="w-7 table-cell px-3 py-2 border-b border-gray-800"
 				onChange={handleChange}>
 				<input type="checkbox" />
 			</div>
-			<div className="table-cell px-3 py-2 border-b">
+			<div className="table-cell px-3 py-2 border-b border-gray-800">
 				<h3 className="capitalize">{title}</h3>
 			</div>
-			<div className="table-cell px-3 py-2 border-b">
+			<div className="table-cell px-3 py-2 border-b border-gray-800">
 				<p>{desc}</p>
 			</div>
-			<div className="table-cell px-3 py-2 border-b w-40	">
+			<div className="table-cell px-3 py-2 border-b border-gray-800 w-40	">
 				<p>{price}</p>
 			</div>
 
-			<div className="table-cell px-3 py-2 border-b w-40	">
+			<div className="table-cell px-3 py-2 border-b border-gray-800 w-40	">
 				<p>pending</p>
 			</div>
 
-			<div className="w-24 table-cell px-3 py-2 border-b">
+			<div className="w-24 table-cell px-3 py-2 border-b border-gray-800">
 				<button
 					className="px-3 py-2 text-xs rounded-lg bg-red-300"
 					onClick={handleDeleteProduct}
