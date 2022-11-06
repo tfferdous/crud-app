@@ -99,11 +99,7 @@ const Admin = () => {
 								<p>Status</p>
 							</div>
 
-							<div className="w-24 table-cell px-3 py-2 ">
-								<button className="px-3 py-2 text-xs rounded-lg bg-red-300">
-									Delete
-								</button>
-							</div>
+							<div className="w-24 table-cell px-3 py-2 "></div>
 						</li>
 						{content}
 					</ul>
