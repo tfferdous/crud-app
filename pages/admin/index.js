@@ -69,7 +69,7 @@ const Admin = () => {
 		<ProductContext.Provider
 			value={{ selectedProducts, dispatch, fetchProducts }}>
 			<div className="products py-5 px-7">
-				<h1 className="text-4xl text-center">All Products</h1>
+				<h1 className="text-4xl text-center">Admin</h1>
 				<div className="mt-5 mb-0 p-5 pb-0 text-end">
 					<button
 						className="px-3 py-2 text-xs rounded-lg bg-green-300"

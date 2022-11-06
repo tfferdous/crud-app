@@ -4,13 +4,14 @@ import axios from "../lib/axios";
 import { _arrayBufferToBase64 } from "../lib/utils";
 
 const Products = () => {
-	let [products, setProducts] = useState([]);
+	const [products, setProducts] = useState([]);
+	const [mount, setMount] = useState(false);
 
 	//generate content
 	let content;
 
 	if (products.length >= 1)
-		content = products.map(({ title, desc, price, _id: id, img }) => (
+		content = products.map(({ title, desc, price, _id: id, img, status }) => (
 			<li className="flex items-center border-b border-gray-800" key={id}>
 				<div
 					className="table-cell px-3 py-2 flex-1"
@@ -37,19 +38,16 @@ const Products = () => {
 				</div>
 
 				<div className="table-cell px-3 py-2 flex-1 w-40	">
-					<p>pending</p>
+					<p>{status}</p>
 				</div>
 			</li>
 		));
 
-	async function fetchProducts() {
-		let {
-			data: { products },
-		} = await axios.get("/products");
-		setProducts(products);
-	}
-
 	useEffect(() => {
+		const fetchProducts = async () => {
+			const res = await axios.get("/products");
+			setProducts(res.data.products);
+		};
 		fetchProducts();
 	}, []);
 

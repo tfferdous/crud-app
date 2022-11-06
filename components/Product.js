@@ -3,8 +3,12 @@ import { _arrayBufferToBase64 } from "../lib/utils";
 import { ProductContext } from "../pages/admin/index";
 import Image from "next/image";
 import axios from "../lib/axios";
+import axiosInstance from "../lib/axios";
+
+const options = ["pending", "done", "rejected"];
+
 function Product({ product }) {
-	let { title, desc, price, img, _id: id } = product || {};
+	let { title, desc, price, img, _id: id, status } = product || {};
 	const { dispatch, fetchProducts } = useContext(ProductContext);
 
 	//handle change  checkbox
@@ -23,6 +27,16 @@ function Product({ product }) {
 			method: "DELETE",
 		});
 		await fetchProducts();
+	};
+
+	//handleChange
+	const handleStatusChange = async (e) => {
+		try {
+			await axiosInstance.patch(`/products/${id}`, { status: e.target.value });
+			await fetchProducts();
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
@@ -57,7 +71,19 @@ function Product({ product }) {
 			</div>
 
 			<div className="table-cell px-3 py-2 flex-1 w-40	">
-				<p>pending</p>
+				{
+					<select onChange={handleStatusChange}>
+						<option defaultValue={status}>{status}</option>
+						{options.map(
+							(option, index) =>
+								option !== status && (
+									<option key={index} value={option}>
+										{option}
+									</option>
+								)
+						)}
+					</select>
+				}
 			</div>
 
 			<div className="w-24 table-cell px-3 py-2">
