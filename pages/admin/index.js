@@ -27,6 +27,7 @@ const Admin = () => {
 	let [products, setProducts] = useState([]);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedProducts, dispatch] = useReducer(reducer, []);
+	const [draftStatusChanges, setDraftStatusChanges] = useState([]);
 
 	//generate content
 	let content;
@@ -65,12 +66,30 @@ const Admin = () => {
 		setShowModal(!showModal);
 	};
 
+	//upate status
+	const updateStatus = async () => {
+		let res = await axios.patch("/products", draftStatusChanges);
+		console.log(res.data);
+	};
+
 	return (
 		<ProductContext.Provider
-			value={{ selectedProducts, dispatch, fetchProducts }}>
+			value={{
+				selectedProducts,
+				dispatch,
+				fetchProducts,
+				setDraftStatusChanges,
+			}}>
 			<div className="products py-5 px-7">
 				<h1 className="text-4xl text-center">Admin</h1>
-				<div className="mt-5 mb-0 p-5 pb-0 text-end">
+				<div className="flex items-center justify-end mt-5 mb-0 p-5 pb-0 text-end">
+					{draftStatusChanges.length ? (
+						<button
+							className="mr-3 px-3 py-2 text-xs rounded-lg bg-blue-600"
+							onClick={updateStatus}>
+							Update Status
+						</button>
+					) : null}
 					<button
 						className="px-3 py-2 text-xs rounded-lg bg-green-300"
 						onClick={toggleModal}>

@@ -9,7 +9,8 @@ const options = ["pending", "done", "rejected"];
 
 function Product({ product }) {
 	let { title, desc, price, img, _id: id, status } = product || {};
-	const { dispatch, fetchProducts } = useContext(ProductContext);
+	const { dispatch, fetchProducts, setDraftStatusChanges } =
+		useContext(ProductContext);
 
 	//handle change  checkbox
 	const handleChange = (e) => {
@@ -31,12 +32,24 @@ function Product({ product }) {
 
 	//handleChange
 	const handleStatusChange = async (e) => {
-		try {
-			await axiosInstance.patch(`/products/${id}`, { status: e.target.value });
-			await fetchProducts();
-		} catch (error) {
-			console.log(error);
-		}
+		let value = e.target.value;
+
+		setDraftStatusChanges((draft) => {
+			let existedDraftItem = draft.find((item) => item.id === id);
+
+			//  if status === current status then remove it
+			if (status === value) {
+				return draft.filter((item) => item.id !== id);
+			}
+
+			if (existedDraftItem) {
+				return draft.map((item) =>
+					item.id === id ? { ...item, status: value } : item
+				);
+			} else {
+				return [...draft, { id, status: value }];
+			}
+		});
 	};
 
 	return (
