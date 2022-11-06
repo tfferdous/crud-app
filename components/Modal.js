@@ -5,6 +5,7 @@ function Modal({ showModal, toggleModal }) {
 		title: "",
 		desc: "",
 		price: "",
+		img: "",
 	});
 
 	//handle  Input change
@@ -40,6 +41,7 @@ function Modal({ showModal, toggleModal }) {
 				title: "",
 				desc: "",
 				price: "",
+				img: "",
 			});
 		} catch (error) {
 			console.log(error);
@@ -107,6 +109,7 @@ function Modal({ showModal, toggleModal }) {
 								name="img"
 								id="img"
 								onChange={handleChange}
+								value={data.img}
 							/>
 						</div>
 					</div>

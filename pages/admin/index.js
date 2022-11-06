@@ -79,23 +79,28 @@ const Admin = () => {
 					</button>
 				</div>
 				<div className="p-5">
-					<ul className="table table-fixed w-full bg-orange-50">
-						<li className="table-row">
-							<div className="w-7 table-cell px-3 py-2 border-b border-gray-800"></div>
-							<div className="table-cell px-3 py-2 border-b border-gray-800">
+					<ul className="w-full bg-orange-50">
+						<li className="flex items-center border-b border-gray-800">
+							<div
+								className="w-7 flex-1 px-3 py-2"
+								style={{ maxWidth: "60px" }}></div>
+							<div
+								className="flex-1 px-3 py-2"
+								style={{ maxWidth: "90px" }}></div>
+							<div className="flex-1 px-3 py-2">
 								<h3 className="capitalize">Tittle</h3>
 							</div>
-							<div className="table-cell px-3 py-2 border-b border-gray-800">
+							<div className="flex-1 px-3 py-2">
 								<p>Description</p>
 							</div>
-							<div className="table-cell px-3 py-2 border-b border-gray-800 w-40	">
+							<div className="flex-1 px-3 py-2 w-40	">
 								<p>Price</p>
 							</div>
-							<div className="table-cell px-3 py-2 border-b border-gray-800 w-40	">
+							<div className="flex-1 px-3 py-2 w-40	">
 								<p>Status</p>
 							</div>
 
-							<div className="w-24 table-cell px-3 py-2 border-b border-gray-800">
+							<div className="w-24 table-cell px-3 py-2 ">
 								<button className="px-3 py-2 text-xs rounded-lg bg-red-300">
 									Delete
 								</button>
