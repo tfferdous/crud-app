@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { _arrayBufferToBase64 } from "../lib/utils";
 import { ProductContext } from "../pages/admin/index";
 import Image from "next/image";
+import axios from "../lib/axios";
 function Product({ product }) {
 	let { title, desc, price, img, _id: id } = product || {};
 	const { dispatch, fetchProducts } = useContext(ProductContext);
@@ -18,7 +19,7 @@ function Product({ product }) {
 
 	//delete product
 	const handleDeleteProduct = async () => {
-		await fetch(`http://localhost:4000/products/${id}`, {
+		await axios(`/products/${id}`, {
 			method: "DELETE",
 		});
 		await fetchProducts();

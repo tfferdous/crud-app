@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import { ProductContext } from "../pages/admin";
+import axios from "../lib/axios";
 
 function Modal({ showModal, toggleModal }) {
+	let fileInputRef = useRef(null);
+
 	let [data, setInputData] = useState({
 		title: "",
 		desc: "",
 		price: "",
-		img: "",
 	});
+
+	const { fetchProducts } = useContext(ProductContext);
 
 	//handle  Input change
 	const handleChange = (e) => {
@@ -31,18 +36,26 @@ function Modal({ showModal, toggleModal }) {
 		});
 
 		try {
-			await fetch("http://localhost:4000/products/", {
-				method: "POST",
-				body: formData,
+			//store data to  api
+			await axios.post("/products", formData, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
 			});
+
+			//refetch products
+			await fetchProducts();
+
+			//close modal
+			toggleModal();
 
 			//reset inputs
 			setInputData({
 				title: "",
 				desc: "",
 				price: "",
-				img: "",
 			});
+			fileInputRef.current.value = "";
 		} catch (error) {
 			console.log(error);
 		}
@@ -109,7 +122,8 @@ function Modal({ showModal, toggleModal }) {
 								name="img"
 								id="img"
 								onChange={handleChange}
-								value={data.img}
+								required
+								ref={fileInputRef}
 							/>
 						</div>
 					</div>

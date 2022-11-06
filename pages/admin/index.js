@@ -2,7 +2,6 @@ import React, { useEffect, useReducer, useState } from "react";
 import Error from "../../components/Error";
 import Modal from "../../components/Modal";
 import Product from "../../components/Product";
-import { deleteProduct } from "../../lib/utils";
 import axios from "../../lib/axios";
 
 // reducer
@@ -45,8 +44,8 @@ const Admin = () => {
 	}
 
 	async function deleteMultipleProducts() {
-		await deleteProduct("http://localhost:4000/products/", {
-			selectedProducts,
+		await axios.delete("/products", {
+			data: { selectedProducts },
 		});
 	}
 
