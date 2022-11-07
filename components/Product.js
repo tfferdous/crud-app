@@ -76,9 +76,7 @@ const Product = ({
 					className="rounded-full w-16 h-16"
 					width={64}
 					height={64}
-					src={`data:image/png;charset=utf-8;base64,${_arrayBufferToBase64(
-						img.data.data
-					)}`}
+					src={`data:image/png;charset=utf-8;base64, ${img.img}`}
 					alt=""
 				/>
 			</div>
@@ -90,7 +88,7 @@ const Product = ({
 				<p>{desc}</p>
 			</div>
 			<div className="table-cell px-3 py-2 flex-1 w-40	">
-				<p>{price}</p>
+				<p>${price}</p>
 			</div>
 
 			<div className="table-cell px-3 py-2 flex-1 w-40	">

@@ -34,16 +34,16 @@ const Products = () => {
 							<div
 								className="w-20 flex-1 px-1 py-2"
 								style={{ maxWidth: "90px" }}></div>
-							<div className="flex-1 px-3 py-2">
+							<div className="flex-1 px-3 py-2 font-bold">
 								<h3 className="capitalize">Tittle</h3>
 							</div>
-							<div className="flex-1 px-3 py-2">
+							<div className="flex-1 px-3 py-2 font-bold">
 								<p>Description</p>
 							</div>
-							<div className="flex-1 px-3 py-2 w-40	">
+							<div className="flex-1 px-3 py-2 w-40	 font-bold">
 								<p>Price</p>
 							</div>
-							<div className="flex-1 px-3 py-2 w-40	">
+							<div className="flex-1 px-3 py-2 w-40	 font-bold">
 								<p>Status</p>
 							</div>
 						</li>
@@ -66,9 +66,7 @@ const Products = () => {
 													className="rounded-full w-16 h-16"
 													width={64}
 													height={64}
-													src={`data:image/png;charset=utf-8;base64,${_arrayBufferToBase64(
-														img.data.data
-													)}`}
+													src={`data:image/png;charset=utf-8;base64,${img.img}`}
 													alt=""
 												/>
 											</div>
@@ -80,7 +78,7 @@ const Products = () => {
 												<p>{desc}</p>
 											</div>
 											<div className="table-cell px-3 py-2 flex-1 w-40	">
-												<p>{price}</p>
+												<p>${price}</p>
 											</div>
 
 											<div className="table-cell px-3 py-2 flex-1 w-40	">

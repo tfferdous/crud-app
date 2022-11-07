@@ -102,16 +102,16 @@ const Admin = () => {
 							<div
 								className="flex-1 px-3 py-2"
 								style={{ maxWidth: "90px" }}></div>
-							<div className="flex-1 px-3 py-2">
+							<div className="flex-1 px-3 py-2 font-bold">
 								<h3 className="capitalize">Tittle</h3>
 							</div>
-							<div className="flex-1 px-3 py-2">
+							<div className="flex-1 px-3 py-2 font-bold">
 								<p>Description</p>
 							</div>
-							<div className="flex-1 px-3 py-2 w-40	">
+							<div className="flex-1 px-3 py-2 w-40	 font-bold">
 								<p>Price</p>
 							</div>
-							<div className="flex-1 px-3 py-2 w-40	">
+							<div className="flex-1 px-3 py-2 w-40	 font-bold">
 								<p>Status</p>
 							</div>
 
@@ -135,7 +135,7 @@ const Admin = () => {
 							  ))
 							: null}
 					</ul>
-					{selectedProducts.length ? (
+					{selectedProducts.length >= 1 ? (
 						<button
 							className="mt-6 px-3 py-2 text-xs rounded-lg bg-red-300"
 							onClick={handleDeleteMulitProduct}>

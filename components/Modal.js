@@ -16,8 +16,10 @@ const Modal = ({ toggleModal, fetchProducts }) => {
 	const handleChange = (e) => {
 		const value = e.target.value;
 		const name = e.target.name;
+
 		if (name === "img") {
-			setInputData({ ...data, img: e.target.files[0] });
+			const img = e.target.files[0];
+			setInputData({ ...data, img: img });
 			return;
 		}
 		setInputData({ ...data, [name]: value });
@@ -42,11 +44,11 @@ const Modal = ({ toggleModal, fetchProducts }) => {
 				},
 			});
 
-			//refetch products
-			await fetchProducts();
-
 			//close modal
 			toggleModal();
+
+			//refetch products
+			await fetchProducts();
 
 			//reset inputs
 			setInputData({
