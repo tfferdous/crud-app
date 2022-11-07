@@ -19,23 +19,24 @@ const reducer = (state, action) => {
 	return state;
 };
 
-//product context
-export const ProductContext = React.createContext();
-
 const Admin = () => {
-	let [products, setProducts] = useState([]);
+	const [data, setData] = useState({
+		isLoading: false,
+		products: [],
+		isError: false,
+	});
 	const [showModal, setShowModal] = useState(false);
 	const [selectedProducts, dispatch] = useReducer(reducer, []);
 	const [draftStatusChanges, setDraftStatusChanges] = useState([]);
 
 	//fetch products
 	const fetchProducts = async () => {
+		setData({ ...data, isLoading: true });
 		try {
-			let {
-				data: { products },
-			} = await axios.get("/products");
-			setProducts(products);
+			const res = await axios.get("/products");
+			setData({ ...data, products: res.data.products });
 		} catch (errror) {
+			setData({ ...data, isLoading: false, isError: true });
 			console.log(errror);
 		}
 	};
@@ -75,13 +76,7 @@ const Admin = () => {
 	};
 
 	return (
-		<ProductContext.Provider
-			value={{
-				selectedProducts,
-				dispatch,
-				fetchProducts,
-				setDraftStatusChanges,
-			}}>
+		<>
 			<div className="products py-5 px-7">
 				<h1 className="text-4xl text-center">Admin</h1>
 				<div className="flex items-center justify-end mt-5 mb-0 p-5 pb-0 text-end">
@@ -122,9 +117,21 @@ const Admin = () => {
 
 							<div className="w-24 table-cell px-3 py-2 "></div>
 						</li>
-						{products.length
-							? products.map((product) => (
-									<Product product={product} key={product._id} />
+						{data.isLoading && (
+							<div className="py-10 text-center"> Loading</div>
+						)}
+						{data.isError && (
+							<div className="py-10 text-center"> somthing went wrong!!</div>
+						)}
+						{data?.products.length && !data?.isLoading
+							? data?.products.map((product) => (
+									<Product
+										product={product}
+										key={product._id}
+										setDraftStatusChanges={setDraftStatusChanges}
+										dispatch={dispatch}
+										fetchProducts={fetchProducts}
+									/>
 							  ))
 							: null}
 					</ul>
@@ -138,8 +145,8 @@ const Admin = () => {
 					) : null}
 				</div>
 			</div>
-			<Modal toggleModal={toggleModal} showModal={showModal} />
-		</ProductContext.Provider>
+			{showModal ? <Modal toggleModal={toggleModal} /> : null}
+		</>
 	);
 };
 

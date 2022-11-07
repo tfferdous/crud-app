@@ -1,16 +1,18 @@
 import React, { useContext, useState } from "react";
 import { _arrayBufferToBase64 } from "../lib/utils";
-import { ProductContext } from "../pages/admin/index";
 import Image from "next/image";
 import axios from "../lib/axios";
 
 //status options
 const options = ["pending", "done", "rejected"];
 
-function Product({ product }) {
+const Product = ({
+	product,
+	dispatch,
+	fetchProducts,
+	setDraftStatusChanges,
+}) => {
 	let { title, desc, price, img, _id: id, status } = product || {};
-	const { dispatch, fetchProducts, setDraftStatusChanges } =
-		useContext(ProductContext);
 
 	//handle change  checkbox
 	const handleChange = (e) => {
@@ -24,10 +26,18 @@ function Product({ product }) {
 
 	//delete product
 	const handleDeleteProduct = async () => {
-		await axios(`/products/${id}`, {
-			method: "DELETE",
-		});
-		await fetchProducts();
+		const isConfirm = window.confirm(
+			"Are you sure you want to delete this product?"
+		);
+		if (!isConfirm) return;
+		try {
+			await axios(`/products/${id}`, {
+				method: "DELETE",
+			});
+			await fetchProducts();
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	//handleChange
@@ -109,6 +119,6 @@ function Product({ product }) {
 			</div>
 		</li>
 	);
-}
+};
 
 export default Product;

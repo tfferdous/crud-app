@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-function Header() {
+const Header = () => {
 	return (
 		<header className="flex items-center justify-between bg-gray-900 py-4 px-8">
 			<Link className="text-white" href="/">
@@ -23,6 +23,6 @@ function Header() {
 			</nav>
 		</header>
 	);
-}
+};
 
 export default Header;

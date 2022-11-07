@@ -1,11 +1,13 @@
 import React, { useContext, useRef, useState } from "react";
 import { ProductContext } from "../pages/admin";
 import axios from "../lib/axios";
+import useClickoutSide from "../hooks/useClickoutSide";
 
-function Modal({ showModal, toggleModal }) {
-	let fileInputRef = useRef(null);
+const Modal = ({ toggleModal }) => {
+	const fileInputRef = useRef(null);
+	const modalContentRef = useRef(null);
 
-	let [data, setInputData] = useState({
+	const [data, setInputData] = useState({
 		title: "",
 		desc: "",
 		price: "",
@@ -15,8 +17,8 @@ function Modal({ showModal, toggleModal }) {
 
 	//handle  Input change
 	const handleChange = (e) => {
-		let value = e.target.value;
-		let name = e.target.name;
+		const value = e.target.value;
+		const name = e.target.name;
 		if (name === "img") {
 			setInputData({ ...data, img: e.target.files[0] });
 			return;
@@ -61,13 +63,18 @@ function Modal({ showModal, toggleModal }) {
 		}
 	};
 
+	//clickout of modal
+	useClickoutSide(modalContentRef, () => {
+		toggleModal();
+	});
+
 	return (
 		<div
-			className={`fixed top-0 leff-0 w-full h-full items-center justify-center ${
-				showModal ? "flex" : "hidden"
-			}`}
+			className={`fixed top-0 left-0 w-full h-full items-center justify-center flex`}
 			style={{ background: "rgba(0, 0, 0, 0.3)" }}>
-			<div className="lg:w-3/5 p-5 bg-green-100 rounded-md">
+			<div
+				className="lg:w-3/5 p-5 bg-green-100 rounded-md"
+				ref={modalContentRef}>
 				<form onSubmit={handleSubmit} encType="multipart/form-data">
 					<div className="mb-3">
 						<label className="block mb-1" htmlFor="title">
@@ -128,11 +135,11 @@ function Modal({ showModal, toggleModal }) {
 						</div>
 					</div>
 					<div className="flex items-center">
-						<input
+						<button
 							className="py-2 px-6 bg-green-600 rounded-xl mt-5"
-							type="submit"
-							value="Submit"
-						/>
+							type="submit">
+							Submit
+						</button>
 						<button
 							className="py-2 px-6 bg-red-500 ml-2 rounded-xl mt-5"
 							type="button"
@@ -144,6 +151,6 @@ function Modal({ showModal, toggleModal }) {
 			</div>
 		</div>
 	);
-}
+};
 
 export default Modal;
