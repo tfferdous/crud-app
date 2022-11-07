@@ -145,7 +145,9 @@ const Admin = () => {
 					) : null}
 				</div>
 			</div>
-			{showModal ? <Modal toggleModal={toggleModal} /> : null}
+			{showModal ? (
+				<Modal toggleModal={toggleModal} fetchProducts={fetchProducts} />
+			) : null}
 		</>
 	);
 };

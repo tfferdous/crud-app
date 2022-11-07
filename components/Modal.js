@@ -1,9 +1,8 @@
-import React, { useContext, useRef, useState } from "react";
-import { ProductContext } from "../pages/admin";
+import React, { useRef, useState } from "react";
 import axios from "../lib/axios";
 import useClickoutSide from "../hooks/useClickoutSide";
 
-const Modal = ({ toggleModal }) => {
+const Modal = ({ toggleModal, fetchProducts }) => {
 	const fileInputRef = useRef(null);
 	const modalContentRef = useRef(null);
 
@@ -12,8 +11,6 @@ const Modal = ({ toggleModal }) => {
 		desc: "",
 		price: "",
 	});
-
-	const { fetchProducts } = useContext(ProductContext);
 
 	//handle  Input change
 	const handleChange = (e) => {
