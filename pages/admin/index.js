@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer, useState } from "react";
-import Error from "../../components/Error";
 import Modal from "../../components/Modal";
 import Product from "../../components/Product";
 import axios from "../../lib/axios";
@@ -29,26 +28,24 @@ const Admin = () => {
 	const [selectedProducts, dispatch] = useReducer(reducer, []);
 	const [draftStatusChanges, setDraftStatusChanges] = useState([]);
 
-	//generate content
-	let content;
+	//fetch products
+	const fetchProducts = async () => {
+		try {
+			let {
+				data: { products },
+			} = await axios.get("/products");
+			setProducts(products);
+		} catch (errror) {
+			console.log(errror);
+		}
+	};
 
-	if (products.length >= 1)
-		content = products.map((product) => (
-			<Product product={product} key={product._id} />
-		));
-
-	async function fetchProducts() {
-		let {
-			data: { products },
-		} = await axios.get("/products");
-		setProducts(products);
-	}
-
-	async function deleteMultipleProducts() {
+	//delete products
+	const deleteMultipleProducts = async () => {
 		await axios.delete("/products", {
 			data: { selectedProducts },
 		});
-	}
+	};
 
 	useEffect(() => {
 		fetchProducts();
@@ -68,8 +65,13 @@ const Admin = () => {
 
 	//upate status
 	const updateStatus = async () => {
-		let res = await axios.patch("/products", draftStatusChanges);
-		console.log(res.data);
+		try {
+			await axios.put("/products", draftStatusChanges);
+			await fetchProducts();
+			setDraftStatusChanges([]);
+		} catch (errror) {
+			console.log(errror);
+		}
 	};
 
 	return (
@@ -120,7 +122,11 @@ const Admin = () => {
 
 							<div className="w-24 table-cell px-3 py-2 "></div>
 						</li>
-						{content}
+						{products.length
+							? products.map((product) => (
+									<Product product={product} key={product._id} />
+							  ))
+							: null}
 					</ul>
 					{selectedProducts.length ? (
 						<button

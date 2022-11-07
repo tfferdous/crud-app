@@ -3,8 +3,8 @@ import { _arrayBufferToBase64 } from "../lib/utils";
 import { ProductContext } from "../pages/admin/index";
 import Image from "next/image";
 import axios from "../lib/axios";
-import axiosInstance from "../lib/axios";
 
+//status options
 const options = ["pending", "done", "rejected"];
 
 function Product({ product }) {

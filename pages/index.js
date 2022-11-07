@@ -5,48 +5,15 @@ import { _arrayBufferToBase64 } from "../lib/utils";
 
 const Products = () => {
 	const [products, setProducts] = useState([]);
-	const [mount, setMount] = useState(false);
-
-	//generate content
-	let content;
-
-	if (products.length >= 1)
-		content = products.map(({ title, desc, price, _id: id, img, status }) => (
-			<li className="flex items-center border-b border-gray-800" key={id}>
-				<div
-					className="table-cell px-3 py-2 flex-1"
-					style={{ maxWidth: "90px" }}>
-					<Image
-						className="rounded-full w-16 h-16"
-						width={64}
-						height={64}
-						src={`data:image/png;charset=utf-8;base64,${_arrayBufferToBase64(
-							img.data.data
-						)}`}
-						alt=""
-					/>
-				</div>
-
-				<div className="table-cell px-3 py-2 flex-1">
-					<h3 className="capitalize">{title}</h3>
-				</div>
-				<div className="table-cell px-3 py-2 flex-1">
-					<p>{desc}</p>
-				</div>
-				<div className="table-cell px-3 py-2 flex-1 w-40	">
-					<p>{price}</p>
-				</div>
-
-				<div className="table-cell px-3 py-2 flex-1 w-40	">
-					<p>{status}</p>
-				</div>
-			</li>
-		));
 
 	useEffect(() => {
 		const fetchProducts = async () => {
-			const res = await axios.get("/products");
-			setProducts(res.data.products);
+			try {
+				const res = await axios.get("/products");
+				setProducts(res.data.products);
+			} catch (errror) {
+				console.log(errror);
+			}
 		};
 		fetchProducts();
 	}, []);
@@ -74,7 +41,41 @@ const Products = () => {
 								<p>Status</p>
 							</div>
 						</li>
-						{content}
+						{products.length
+							? products.map(({ title, desc, price, _id: id, img, status }) => (
+									<li
+										className="flex items-center border-b border-gray-800"
+										key={id}>
+										<div
+											className="table-cell px-3 py-2 flex-1"
+											style={{ maxWidth: "90px" }}>
+											<Image
+												className="rounded-full w-16 h-16"
+												width={64}
+												height={64}
+												src={`data:image/png;charset=utf-8;base64,${_arrayBufferToBase64(
+													img.data.data
+												)}`}
+												alt=""
+											/>
+										</div>
+
+										<div className="table-cell px-3 py-2 flex-1">
+											<h3 className="capitalize">{title}</h3>
+										</div>
+										<div className="table-cell px-3 py-2 flex-1">
+											<p>{desc}</p>
+										</div>
+										<div className="table-cell px-3 py-2 flex-1 w-40	">
+											<p>{price}</p>
+										</div>
+
+										<div className="table-cell px-3 py-2 flex-1 w-40	">
+											<p>{status}</p>
+										</div>
+									</li>
+							  ))
+							: null}
 					</ul>
 				</div>
 			</div>
