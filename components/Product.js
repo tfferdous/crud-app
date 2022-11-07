@@ -12,11 +12,11 @@ const Product = ({
 	fetchProducts,
 	setDraftStatusChanges,
 }) => {
-	let { title, desc, price, img, _id: id, status } = product || {};
+	const { title, desc, price, img, _id: id, status } = product || {};
 
 	//handle change  checkbox
 	const handleChange = (e) => {
-		let isChecked = e.target.checked;
+		const isChecked = e.target.checked;
 		if (isChecked) {
 			return dispatch({ type: "addSelection", payload: id });
 		}
@@ -42,10 +42,10 @@ const Product = ({
 
 	//handleChange
 	const handleStatusChange = async (e) => {
-		let value = e.target.value;
+		const value = e.target.value;
 
 		setDraftStatusChanges((draft) => {
-			let existedDraftItem = draft.find((item) => item.id === id);
+			const existedDraftItem = draft.find((item) => item.id === id);
 
 			//  if status === current status then remove it
 			if (status === value) {
